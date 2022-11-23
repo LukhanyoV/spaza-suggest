@@ -80,9 +80,83 @@ module.exports = spazaSuggest => {
         const {id} = req.session?.client
         res.render("clientsuggested", {
             suggestions: await spazaSuggest.suggestions(id)
-        })
+        });
+    }
+
+    /*
+    SHOP ROUTES
+    */
+    // shop home
+    const shopHome = async (req, res) => {
+        const {area_id} = req.session?.shop;
+        res.render("shopsuggestions", {
+            suggestions: await spazaSuggest.suggestionsForArea(area_id)
+        });
+    }
+    const shopAccept = async (req, res) => {
+        try {
+            
+        } catch (error) {
+            
+        } finally {
+            res.redirect("back")
+        }
+    }
+
+    // register a shop
+    const shopRegister = async (req, res) => {
+        res.render("shopregister", {
+            areas: await spazaSuggest.areas()
+        });
+    }
+    const shopRegisterPost = async (req, res) => {
+        try {
+            let {spazaname, area} = req.body;
+            spazaname = spazaname.trim();
+            if(!spazaname || !area){
+                req.flash("info", "Please make sure you enter a spaza nam and select an area");
+            } else {
+                const code = await spazaSuggest.registerSpaza(spazaname, area);
+                if(code){
+                    req.flash("success", `Registration success your code is ${code}`);
+                }
+            }
+        } catch (error) {
+            console.log(error.stack);
+            req.flash("error", "Unknown error occured");
+        } finally {
+            res.redirect("back");
+        }
     }
     
+    // login a user
+    const shopLogin = (req, res) => {
+        res.render("shoplogin.hbs");
+    }
+    const shopLoginPost = async (req, res) => {
+        try {
+            let {shopcode} = req.body;
+            shopcode = shopcode.trim();
+            if(!shopcode){
+                req.flash("info", "Shop code cannot be empty");
+            } else {
+                const shop = await spazaSuggest.spazaLogin(shopcode);
+                if(!shop){
+                    req.flash("error", `Shop with code "${shopcode}" not found`);
+                } else {
+                    // don't save spaza code in session
+                    delete shop?.code;
+                    req.session.shop = shop;
+                }
+            }
+        } catch (error) {
+            console.log(error.stack);
+            req.flash("error", "Unknown error has occured");
+        } finally {
+            res.redirect("back");
+        }
+    }
+
     return {
         clientSuggest,
         clientSuggestPost,
@@ -90,6 +164,13 @@ module.exports = spazaSuggest => {
         clientRegisterPost,
         clientLogin,
         clientLoginPost,
-        clientSuggested
+        clientSuggested,
+
+        shopHome,
+        shopAccept,
+        shopRegister,
+        shopRegisterPost,
+        shopLogin,
+        shopLoginPost
     }
 }

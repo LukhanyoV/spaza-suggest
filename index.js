@@ -34,7 +34,16 @@ function authCheck(req, res, next){
         else {
             return !client ? res.redirect("/clientlogin") : next();
         }
-    } 
+    } else if(currentPath.startsWith("/shop")){
+        const shop = req.session?.shop;
+        const authPath = /(register|login)$/i.test(currentPath);
+        if(authPath){
+            return !shop ? next() : res.redirect("/shophome");
+        } 
+        else {
+            return !shop ? res.redirect("/shoplogin") : next();
+        }
+    }
     next()
 }
 app.use(authCheck)
@@ -55,6 +64,14 @@ app.get("/clientlogout", (req, res) => {
     req.session.destroy();
     res.redirect("/clientlogin");
 })
+// routes for a shop owner
+app.get("/shophome", routes.shopHome);
+app.post("/shopaccept", routes.shopAccept);
+app.get("/shopregister", routes.shopRegister);
+app.post("/shopregister", routes.shopRegisterPost);
+
+app.get("/shoplogin", routes.shopLogin);
+app.post("/shoplogin", routes.shopLoginPost);
 
 // deploy with https://deta.sh
 module.exports = app;
