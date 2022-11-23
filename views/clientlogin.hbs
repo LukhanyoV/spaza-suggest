@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="form">
+        <h2>Client Login</h2>
+
+        {{#if messages.error}}
+        <div class="error">
+            <p>{{messages.error}}</p>
+        </div>
+        {{/if}}
+
+        {{#if messages.info}}
+        <div class="info">
+            <p>{{messages.info}}</p>
+        </div>
+        {{/if}}
+
+        <form action="/clientlogin" method="post">
+            <label for="clientcode">Enter client code:</label>
+            <input type="text" name="clientcode" id="clientcode" placeholder="Please enter your client code" autocomplete="off">
+            <button type="submit">LOGIN</button>
+        </form>
+    </div>
+</div>
