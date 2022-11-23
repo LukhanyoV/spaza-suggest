@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Area Suggestions</h2>
+
+    {{#if suggestions}}
+    <table>
+        <thead>
+            <tr>
+                <th>Suggestion</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each suggestions}}
+            <tr>
+                <td>{{product_name}}</td>
+                <td>
+                    <form action="/shopaccept" method="post">
+                        <input type="hidden" name="product" value="{{id}}">
+                        <button type="submit">ACCEPT</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{/if}}
+</div>
