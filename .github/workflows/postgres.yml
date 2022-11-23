@@ -51,7 +51,7 @@ jobs:
     - run: npm install
     - run: |
         PGPASSWORD=test123 psql -h localhost -U test -d spaza_suggest_test -a -f './sql/002.tables.sql'
-        PGPASSWORD=test123 psql -h localhost -U test -d spaza_suggest_test -a -f './sql/002.areas.sql'
+        PGPASSWORD=test123 psql -h localhost -U test -d spaza_suggest_test -a -f './sql/003.areas.sql'
     - run: npm run build --if-present
     - run: npm test
     env: 
