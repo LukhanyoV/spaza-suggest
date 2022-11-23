@@ -48,6 +48,11 @@ function authCheck(req, res, next){
 }
 app.use(authCheck)
 
+// home route
+app.get("/", (req, res) => {
+    res.render("index")
+})
+
 // routes for the client
 app.get("/clienthome", routes.clientSuggest);
 app.post("/clientsuggest", routes.clientSuggestPost);
