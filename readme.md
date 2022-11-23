@@ -1,5 +1,7 @@
 # Spaza suggest
 
+[![Node.js CI](https://github.com/LukhanyoV/spaza-suggest/actions/workflows/postgres.yml/badge.svg)](https://github.com/LukhanyoV/spaza-suggest/actions/workflows/postgres.yml)
+
 Create an app that help Spaza Shops to crowdsource which products to sell in their shops.
 
 Create a web app that allows spaza shop clients to suggest which products spaza shops in a selected area should sell. 
