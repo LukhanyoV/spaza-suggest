@@ -69,7 +69,6 @@ module.exports = spazaSuggest => {
                 }
             }
         } catch (error) {
-            console.log(error.stack);
             req.flash("error", "Unknown error has occured");
         } finally {
             res.redirect("back");

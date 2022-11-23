@@ -28,18 +28,13 @@ function authCheck(req, res, next){
     if(currentPath.startsWith("/client")){
         const client = req.session?.client;
         const authPath = /(register|login)$/i.test(currentPath);
-        // console.log(authPath);
         if(authPath){
-            // console.log(client);
             return !client ? next() : res.redirect("/clienthome");
         } 
         else {
             return !client ? res.redirect("/clientlogin") : next();
         }
     } 
-    // else if(currentPath.startsWith("/shop")){
-    //     return next()
-    // }
     next()
 }
 app.use(authCheck)
