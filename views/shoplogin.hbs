@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="form">
+        <h2>Spaza Login</h2>
+
+        {{#if messages.error}}
+        <div class="error">
+            <p>{{messages.error}}</p>
+        </div>
+        {{/if}}
+
+        {{#if messages.info}}
+        <div class="info">
+            <p>{{messages.info}}</p>
+        </div>
+        {{/if}}
+
+        <form action="/shoplogin" method="post">
+            <label for="shopcode">Enter shop code:</label>
+            <input type="text" name="shopcode" id="shopcode" placeholder="Please enter your shop code" autocomplete="off">
+            <button type="submit">LOGIN</button>
+        </form>
+    </div>
+</div>
