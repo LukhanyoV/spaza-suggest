@@ -1,6 +1,6 @@
-import ShortUniqueId from 'short-unique-id';
+const ShortUniqueId = require('short-unique-id');
 
-export default function SpazaSuggest (db){
+module.exports = function SpazaSuggest (db){
 
     const uid = new ShortUniqueId({ length: 5 });
 
