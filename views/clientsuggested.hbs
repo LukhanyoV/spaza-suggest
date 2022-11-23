@@ -1,0 +1,22 @@
+<div class="container">
+    {{#if suggestions}}
+    <table>
+        <thead>
+            <th>Area Name</th>
+            <th>Product Name</th>
+        </thead>
+        <tbody>
+            {{#each suggestions}}
+            <tr>
+                <td>{{area_name}}</td>
+                <td>{{product_name}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{/if}}
+
+    {{#unless suggestions}}
+    <h2>You have not made any suggestions yet</h2>
+    {{/unless}}
+</div>
