@@ -1,4 +1,34 @@
 <div class="container">
     <h2>Welcome to Spaza Suggest</h2>
-    
+
+    {{#if messages.error}}
+    <div class="error">
+        <p>{{messages.error}}</p>
+    </div>
+    {{/if}}
+
+    {{#if messages.info}}
+    <div class="info">
+        <p>{{messages.info}}</p>
+    </div>
+    {{/if}}
+
+    {{#if messages.success}}
+    <div class="success">
+        <p>{{messages.success}}</p>
+    </div>
+    {{/if}}
+
+    <form action="/clientsuggest" method="post">
+        <select name="area">
+            <option value="" selected disabled>select area</option>
+            {{#each areas}}
+            <option value="{{id}}">{{area_name}}</option>
+            {{/each}}
+        </select>
+        <br>
+        <input type="text" name="suggestion" placeholder="please enter your product">
+        <br>
+        <button type="submit">SUGGEST</button>
+    </form>
 </div>
