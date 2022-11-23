@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="form">
+        <h2>Client Register</h2>
+
+        {{#if messages.error}}
+        <div class="error">
+            <p>{{messages.error}}</p>
+        </div>
+        {{/if}}
+
+        {{#if messages.info}}
+        <div class="info">
+            <p>{{messages.info}}</p>
+        </div>
+        {{/if}}
+
+        {{#if messages.success}}
+        <div class="success">
+            <p>{{messages.success}}</p>
+        </div>
+        {{/if}}
+
+        <form action="/clientregister" method="post">
+            <label for="username">Enter username:</label>
+            <input type="text" name="username" id="username" placeholder="Please enter your username">
+            <button type="submit">REGISTER</button>
+        </form>
+    </div>
+</div>
