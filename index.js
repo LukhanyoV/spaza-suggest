@@ -14,17 +14,56 @@ app.use(require("express-session")({
     saveUninitialized: false,
     resave: true
 }))
-app.use(require("express-flash")())
+app.use(require("express-flash")());
 
-const db = require("./db")
-const spazaSuggest = require("./spaza-suggest")(db)
-const routes = require("./routes")(spazaSuggest)
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
-app.get("/", routes.clientSuggest);
+const db = require("./db");
+const spazaSuggest = require("./spaza-suggest")(db);
+const routes = require("./routes")(spazaSuggest);
+
+function authCheck(req, res, next){
+    const currentPath = req.path;
+    if(currentPath.startsWith("/client")){
+        const client = req.session?.client;
+        const authPath = /(register|login)$/i.test(currentPath);
+        // console.log(authPath);
+        if(authPath){
+            // console.log(client);
+            return !client ? next() : res.redirect("/clienthome");
+        } 
+        else {
+            return !client ? res.redirect("/clientlogin") : next();
+        }
+    } 
+    // else if(currentPath.startsWith("/shop")){
+    //     return next()
+    // }
+    next()
+}
+app.use(authCheck)
+
+// routes for the client
+app.get("/clienthome", routes.clientSuggest);
+app.post("/clientsuggest", routes.clientSuggestPost);
+
+app.get("/clientsuggestions", routes.clientSuggested);
+
+app.get("/clientregister", routes.clientRegister);
+app.post("/clientregister", routes.clientRegisterPost);
+
+app.get("/clientlogin", routes.clientLogin);
+app.post("/clientlogin", routes.clientLoginPost);
+
+app.get("/clientlogout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/clientlogin");
+})
 
 // deploy with https://deta.sh
 module.exports = app;
 
 // test on localhost or deploy on heroku
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`🚀 App runnning at http://localhost:4000`))
+app.listen(PORT, () => console.log(`🚀 App runnning at http://localhost:4000`));
