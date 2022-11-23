@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="form">
+        <h2>Spaza Register</h2>
+
+        {{#if messages.error}}
+        <div class="error">
+            <p>{{messages.error}}</p>
+        </div>
+        {{/if}}
+
+        {{#if messages.info}}
+        <div class="info">
+            <p>{{messages.info}}</p>
+        </div>
+        {{/if}}
+
+        {{#if messages.success}}
+        <div class="success">
+            <p>{{messages.success}}</p>
+        </div>
+        {{/if}}
+
+        <form action="/shopregister" method="post">
+            <label for="spazaname">Spaza name:</label>
+            <input type="text" name="spazaname" id="spazaname" placeholder="Please enter your spaza name">
+            <br>
+            <label for="area">Select area:</label>
+            <select name="area">
+                <option value="" selected disabled>select area</option>
+                {{#each areas}}
+                <option value="{{id}}">{{area_name}}</option>
+                {{/each}}
+            </select>
+            <br>
+            <button type="submit">REGISTER</button>
+        </form>
+    </div>
+</div>
